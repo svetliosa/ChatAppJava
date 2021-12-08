@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">ChatAppJava</string>
+    <string name="creteNewAccount">Create New Account</string>
+    <string name="addImage">Add image</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="email">Email</string>
+    <string name="confirm_password">Confirm password</string>
+    <string name="signin">SIGN IN</string>
+    <string name="signup">Sign up</string>
+    <string name="fullname">Full name</string>
+    <string name="welcomeBack">Welcome Back!</string>
+    <string name="loginToContinue">Login to continue</string>
+    <string name="incorrectUsername">Incorrect username</string>
+    <string name="incorrectFullName">Incorrect Full name</string>
+    <string name="incorrectEmail">Incorrect Email</string>
+    <string name="incorrectPassword">Incorrect Password</string>
+    <string name="notSamePassword">Both passwords must be the same</string>
+    <string name="usernameExists">Username already exists</string>
+    <string name="noUser">There is no user with this username and password</string>
+</resources>
