@@ -38,6 +38,7 @@ public class ActivitySignUp extends AppCompatActivity {
     private Button btnSignUp;
     private Button btnSignIn;
     private TextView txvAddImage;
+    private String imageUri = "android.resource://com.example.chatappjava/2131165281";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,8 +60,6 @@ public class ActivitySignUp extends AppCompatActivity {
         edtImage.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v)
             {
-               // Intent galleryintent = new Intent(Intent.ACTION_PICK,android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-               // startActivityForResult(galleryintent, RESULT_LOAD_IMAGE);
                 Intent intent = new Intent();
                 intent.setType("image/*");
                 intent.setAction(Intent.ACTION_GET_CONTENT);
@@ -96,7 +95,6 @@ public class ActivitySignUp extends AppCompatActivity {
                     return;
                 }
 
-
                 try {
                     Connection conn = DatabaseConnection.createDatabaseConnection();
                     Statement statement = conn.createStatement();
@@ -116,7 +114,7 @@ public class ActivitySignUp extends AppCompatActivity {
                         pstmt.setString(2, encyptedPassword);
                         pstmt.setString(3, edtEmail.getText().toString());
                         pstmt.setString(4, edtFullName.getText().toString());
-                        pstmt.setString(5, edtImage.getDrawable().toString());
+                        pstmt.setString(5, imageUri);
 
                         int result = pstmt.executeUpdate();
 
@@ -146,30 +144,11 @@ public class ActivitySignUp extends AppCompatActivity {
         if (requestCode == GALLERY_REQUEST_CODE && resultCode == RESULT_OK && data != null) {
             Uri imagedata = data.getData();
             edtImage.setImageURI(imagedata);
+            imageUri = imagedata.toString();
             txvAddImage.setVisibility(View.INVISIBLE);
         }
     }
 
-    private Boolean isValidSignInDetails() {
-        if (TextUtils.isEmpty(edtFullName.getText()) || !edtFullName.getText().toString().matches("^[a-zA-Z\\s]+")){
-            showToast(getString(R.string.incorrectFullName));
-            return false;
-        } else if (TextUtils.isEmpty(edtEmail.getText()) || !edtEmail.getText().toString().matches("^[А-Яа-яA-Za-z0-9+_.-]+@(.+)$")) {
-            showToast(getString(R.string.incorrectEmail));
-            return false;
-        } else if (TextUtils.isEmpty(edtUsername.getText())) {
-            showToast(getString(R.string.incorrectUsername));
-            return false;
-        } else if (TextUtils.isEmpty(edtPassword.getText()) || TextUtils.isEmpty(edtConfirmPassword.getText()) || edtPassword.getText().length() < 8) {
-            showToast(getString(R.string.incorrectPassword));
-            return false;
-        } else if (!edtPassword.getText().equals(edtConfirmPassword.getText())) {
-            showToast(getString(R.string.notSamePassword));
-            return false;
-        } else {
-            return true;
-        }
-    }
 
     private void showToast(String message) {
         Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
