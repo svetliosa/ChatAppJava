@@ -18,4 +18,16 @@
     <string name="notSamePassword">Both passwords must be the same</string>
     <string name="usernameExists">Username already exists</string>
     <string name="noUser">There is no user with this username and password</string>
+    <string name="message_hint">Say anything</string>
+    <string name="send">Send</string>
+    <string name="profile_me">My Profile Pic</string>
+    <string name="profile_other">Other profile pic</string>
+    <string name="hint_enter_a_message">Enter your message</string>
+    <string name="message">Message</string>
+    <string name="time">00:00</string>
+    <string name="nameOfUser">Name of user</string>
+    <string name="TypeMessage">Type a message</string>
+    <string name="contacts">Contacts</string>
+    <string name="friendRequests">Friend requests</string>
+    <string name="searchFriends">Search friends</string>
 </resources>

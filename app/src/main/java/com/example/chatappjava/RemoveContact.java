@@ -1,25 +1,19 @@
 package com.example.chatappjava;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
-import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity {
+public class RemoveContact extends AppCompatActivity {
 
     private ArrayList<UserData> arrayListUserData = new ArrayList<>();
     private String userId;
@@ -50,36 +44,9 @@ public class MainActivity extends AppCompatActivity {
 
     private void initRecycleView() {
         RecyclerView recyclerView = findViewById(R.id.recyclerView);
-        ContactsAdapter adapter = new ContactsAdapter(arrayListUserData, this);
+        ContactsRemoveAdapter adapter = new ContactsRemoveAdapter(arrayListUserData, this);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater=getMenuInflater();
-        inflater.inflate(R.menu.menu,menu);
-        return super.onCreateOptionsMenu(menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-
-        if (item.getItemId()==R.id.contacts){
-            Intent intent = new Intent(getApplicationContext(), RemoveContact.class);
-            intent.putExtra("IdAccount", userId);
-            startActivity(intent);
-        }
-
-        if (item.getItemId()==R.id.friendRequests){
-            Toast.makeText(this, "Hnstructions Item", Toast.LENGTH_SHORT).show();
-        }
-
-        if (item.getItemId()==R.id.searchFriends){
-            Toast.makeText(this, "Hotels Item", Toast.LENGTH_SHORT).show();
-        }
-
-        return super.onOptionsItemSelected(item);
     }
 }

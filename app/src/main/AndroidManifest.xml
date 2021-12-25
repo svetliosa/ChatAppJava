@@ -16,9 +16,17 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.ChatAppJava">
-        <activity android:name=".ActivityChat"></activity>
+        <activity
+            android:name=".specificchat"
+            android:theme="@style/Theme.Design.NoActionBar"
+             />
+
+
         <activity
             android:name=".ActivitySignUp"
+            android:exported="true" />
+        <activity
+            android:name=".RemoveContact"
             android:exported="true" />
         <activity
             android:name=".ActivitySignIn"
