@@ -73,7 +73,9 @@ public class MainActivity extends AppCompatActivity {
         }
 
         if (item.getItemId()==R.id.friendRequests){
-            Toast.makeText(this, "Hnstructions Item", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(getApplicationContext(), FriendRequests.class);
+            intent.putExtra("IdAccount", userId);
+            startActivity(intent);
         }
 
         if (item.getItemId()==R.id.searchFriends){

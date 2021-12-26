@@ -29,6 +29,9 @@
             android:name=".RemoveContact"
             android:exported="true" />
         <activity
+            android:name=".FriendRequests"
+            android:exported="true" />
+        <activity
             android:name=".ActivitySignIn"
             android:exported="true">
             <intent-filter>
