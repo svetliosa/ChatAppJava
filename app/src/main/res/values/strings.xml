@@ -27,7 +27,12 @@
     <string name="time">00:00</string>
     <string name="nameOfUser">Name of user</string>
     <string name="TypeMessage">Type a message</string>
-    <string name="contacts">Contacts</string>
+    <string name="contacts">Remove friend</string>
     <string name="friendRequests">Friend requests</string>
-    <string name="searchFriends">Search friends</string>
+    <string name="searchFriends">Search for friend</string>
+    <string name="home">Contacts</string>
+    <string name="removedUser">User has been removed from friend list</string>
+    <string name="sendFriendRequest">Friend request is sended</string>
+    <string name="userAccepted">User has been accepted</string>
+    <string name="userDeclined">User has been declined</string>
 </resources>

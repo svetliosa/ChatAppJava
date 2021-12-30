@@ -19,28 +19,24 @@ import com.mikhaellopez.circularimageview.CircularImageView;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 
-import static com.parse.Parse.getApplicationContext;
-
-public class ContactsRemoveAdapter extends RecyclerView.Adapter<ContactsRemoveAdapter.ViewHolder> {
+public class SendFriendRequestAdapter extends RecyclerView.Adapter<SendFriendRequestAdapter.ViewHolder> {
 
     private static final String TAG = "ContactsAdapter";
 
     private ArrayList<UserData> arrayListUserData = new ArrayList<>();
     private Context context;
 
-    public ContactsRemoveAdapter(ArrayList<UserData> arrayListUserData, Context context) {
+    public SendFriendRequestAdapter(ArrayList<UserData> arrayListUserData, Context context) {
         this.arrayListUserData = arrayListUserData;
         this.context = context;
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.activity_contacts_list_remove_item, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.activity_send_friend_request_item, parent, false);
         ViewHolder holder = new ViewHolder(view);
         return holder;
     }
@@ -56,40 +52,23 @@ public class ContactsRemoveAdapter extends RecyclerView.Adapter<ContactsRemoveAd
 
         holder.userFullName.setText(arrayListUserData.get(position).name);
 
-        holder.removeButton.setOnClickListener(new View.OnClickListener() {
+        holder.buttonAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 try {
                     Connection conn = DatabaseConnection.createDatabaseConnection();
 
                     PreparedStatement st1 = conn.prepareStatement(
-                            "Delete from FRIENDSLIST where USER_ID = ? and FRIEND_ID = ?");
-                    st1.setString(1, arrayListUserData.get(position).userId);
-                    st1.setString(2, arrayListUserData.get(position).friendId);
+                            " insert into FRIEND_REQUESTS values (?,?,?)");
+                    st1.setString(1, arrayListUserData.get(position).friendId);
+                    st1.setString(2, arrayListUserData.get(position).userId);
+                    st1.setInt(3, 0);
                     st1.execute();
 
-                    PreparedStatement st2 = conn.prepareStatement(
-                            "Delete from FRIENDSLIST where USER_ID = ? and FRIEND_ID = ?");
-                    st2.setString(1, arrayListUserData.get(position).friendId);
-                    st2.setString(2, arrayListUserData.get(position).userId);
-                    st2.execute();
+                    showToast(context.getResources().getString(R.string.sendFriendRequest));
 
-                    PreparedStatement st3 = conn.prepareStatement(
-                            "Delete from FRIEND_REQUESTS where SENDER_ID = ? and RECEIVER_ID = ?");
-                    st3.setString(1, arrayListUserData.get(position).userId);
-                    st3.setString(2, arrayListUserData.get(position).friendId);
-                    st3.execute();
-
-                    PreparedStatement st4 = conn.prepareStatement(
-                            "Delete from FRIEND_REQUESTS where SENDER_ID = ? and RECEIVER_ID = ?");
-                    st4.setString(1, arrayListUserData.get(position).friendId);
-                    st4.setString(2, arrayListUserData.get(position).userId);
-                    st4.execute();
-
-                    showToast(context.getResources().getString(R.string.removedUser));
-
-                    Intent intent = new Intent(context, RemoveContact.class);
-                    intent.putExtra("IdAccount", arrayListUserData.get(position).userId);
+                    Intent intent = new Intent(context, SendFriendRequests.class);
+                    intent.putExtra("IdAccount", arrayListUserData.get(position).friendId);
                     context.startActivity(intent);
 
                 } catch (SQLException e) {
@@ -122,19 +101,24 @@ public class ContactsRemoveAdapter extends RecyclerView.Adapter<ContactsRemoveAd
         return arrayListUserData.size();
     }
 
+    public void filterList(ArrayList<UserData> filteredList) {
+        arrayListUserData = filteredList;
+        notifyDataSetChanged();
+    }
+
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         CircularImageView userProfileImage;
         TextView userFullName;
         RelativeLayout parentLayout;
-        Button removeButton;
+        Button buttonAdd;
 
         public ViewHolder(View itemView) {
             super(itemView);
             userProfileImage = itemView.findViewById(R.id.imageProfile);
             userFullName = itemView.findViewById(R.id.userFullName);
             parentLayout = itemView.findViewById(R.id.parent_layout);
-            removeButton = itemView.findViewById(R.id.buttonRemove);
+            buttonAdd = itemView.findViewById(R.id.buttonAdd);
         }
     }
 }

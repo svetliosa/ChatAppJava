@@ -2,6 +2,9 @@ package com.example.chatappjava;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -48,5 +51,36 @@ public class FriendRequests extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater=getMenuInflater();
+        inflater.inflate(R.menu.menu3,menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        if (item.getItemId()==R.id.contacts){
+            Intent intent = new Intent(getApplicationContext(), RemoveContact.class);
+            intent.putExtra("IdAccount", userId);
+            startActivity(intent);
+        }
+
+        if (item.getItemId()==R.id.searchFriends){
+            Intent intent = new Intent(getApplicationContext(), SendFriendRequests.class);
+            intent.putExtra("IdAccount", userId);
+            startActivity(intent);
+        }
+
+        if (item.getItemId()==R.id.home){
+            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+            intent.putExtra("IdAccount", userId);
+            startActivity(intent);
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }

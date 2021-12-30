@@ -77,9 +77,9 @@ public class FriendRequestsAdapter extends RecyclerView.Adapter<FriendRequestsAd
                     st3.setString(2, arrayListUserData.get(position).friendId);
                     st3.execute();
 
-                    showToast("User has been accepted");
+                    showToast(context.getResources().getString(R.string.userAccepted));
 
-                    Intent intent = new Intent(context, MainActivity.class);
+                    Intent intent = new Intent(context, FriendRequests.class);
                     intent.putExtra("IdAccount", arrayListUserData.get(position).userId);
                     context.startActivity(intent);
 
@@ -90,6 +90,8 @@ public class FriendRequestsAdapter extends RecyclerView.Adapter<FriendRequestsAd
                 }
             }
         });
+
+
 
         holder.declineButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -104,7 +106,7 @@ public class FriendRequestsAdapter extends RecyclerView.Adapter<FriendRequestsAd
                     st1.execute();
 
 
-                    showToast("User has been declined");
+                    showToast(context.getResources().getString(R.string.userDeclined));
 
                     Intent intent = new Intent(context, MainActivity.class);
                     intent.putExtra("IdAccount", arrayListUserData.get(position).userId);

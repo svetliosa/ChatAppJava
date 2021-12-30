@@ -18,10 +18,7 @@
         android:theme="@style/Theme.ChatAppJava">
         <activity
             android:name=".specificchat"
-            android:theme="@style/Theme.Design.NoActionBar"
-             />
-
-
+            android:theme="@style/Theme.Design.NoActionBar" />
         <activity
             android:name=".ActivitySignUp"
             android:exported="true" />
@@ -30,6 +27,9 @@
             android:exported="true" />
         <activity
             android:name=".FriendRequests"
+            android:exported="true" />
+        <activity
+            android:name=".SendFriendRequests"
             android:exported="true" />
         <activity
             android:name=".ActivitySignIn"

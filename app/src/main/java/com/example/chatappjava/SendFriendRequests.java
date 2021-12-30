@@ -1,28 +1,33 @@
 package com.example.chatappjava;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.Toast;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity {
+public class SendFriendRequests extends AppCompatActivity {
 
     private ArrayList<UserData> arrayListUserData = new ArrayList<>();
+    private Button searchButton;
+    private EditText searchUsername;
     private String userId;
+    private SendFriendRequestAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,14 +36,16 @@ public class MainActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         userId = intent.getStringExtra("IdAccount");
+        setContentView(R.layout.activity_send_friend_request);
+        searchUsername = findViewById(R.id.searchUsername);
 
         try {
             Connection conn = DatabaseConnection.createDatabaseConnection();
             Statement statement = conn.createStatement();
 
-            ResultSet resultat = statement.executeQuery("select b.FULLNAME, b.IMAGE, a.USER_ID, a.FRIEND_ID from FRIENDSLIST a join USERS b on b.ID = a.FRIEND_ID where USER_ID = '" + userId + "'");
+            ResultSet resultat = statement.executeQuery("select ID, FULLNAME, IMAGE from USERS where ID not in (select FRIEND_ID from FRIENDSLIST where USER_ID = " + userId  + ") and FULLNAME like '%" + searchUsername.getText().toString() + "%' and ID not in (select RECEIVER_ID from FRIEND_REQUESTS where STATUS <> 3 and SENDER_ID = " + userId  + ") and ID <>" + userId);
             while (resultat.next()) {
-                arrayListUserData.add(new UserData(resultat.getString("FULLNAME"), resultat.getString("IMAGE"), resultat.getString("USER_ID"), resultat.getString("FRIEND_ID")));
+                arrayListUserData.add(new UserData(resultat.getString("FULLNAME"), resultat.getString("IMAGE"), resultat.getString("ID"), userId));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -46,11 +53,42 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
         }
         initRecycleView();
+
+        searchUsername.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                filter(editable.toString());
+            }
+        });
+
+
+    }
+
+    private void filter(String text) {
+        ArrayList<UserData> filteredList = new ArrayList<>();
+
+        for(UserData item : arrayListUserData) {
+            if (item.name.toLowerCase().contains(text.toLowerCase())) {
+                filteredList.add(item);
+            }
+
+        }
+        adapter.filterList(filteredList);
     }
 
     private void initRecycleView() {
         RecyclerView recyclerView = findViewById(R.id.recyclerView);
-        ContactsAdapter adapter = new ContactsAdapter(arrayListUserData, this);
+        adapter = new SendFriendRequestAdapter(arrayListUserData, this);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
@@ -59,7 +97,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater=getMenuInflater();
-        inflater.inflate(R.menu.menu,menu);
+        inflater.inflate(R.menu.menu2,menu);
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -78,8 +116,8 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
         }
 
-        if (item.getItemId()==R.id.searchFriends){
-            Intent intent = new Intent(getApplicationContext(), SendFriendRequests.class);
+        if (item.getItemId()==R.id.home){
+            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
             intent.putExtra("IdAccount", userId);
             startActivity(intent);
         }
