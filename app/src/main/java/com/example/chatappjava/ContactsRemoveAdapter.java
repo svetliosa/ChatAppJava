@@ -99,18 +99,6 @@ public class ContactsRemoveAdapter extends RecyclerView.Adapter<ContactsRemoveAd
                 }
             }
         });
-
-        holder.parentLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(context.getApplicationContext(), specificchat.class);
-                intent.putExtra("userId", arrayListUserData.get(position).userId);
-                intent.putExtra("friendId", arrayListUserData.get(position).friendId);
-                intent.putExtra("friendName", arrayListUserData.get(position).name);
-                intent.putExtra("friendImage", arrayListUserData.get(position).image);
-                context.startActivity(intent);
-            }
-        });
     }
 
     private void showToast(String message) {

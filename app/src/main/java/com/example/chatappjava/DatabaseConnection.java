@@ -7,7 +7,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class DatabaseConnection {
-    private static String ip = "192.168.31.203";
+    private static String ip = "192.168.0.106";
     private static String port = "1433";
     private static String classs = "net.sourceforge.jtds.jdbc.Driver";
     private static String db = "CHAT";
