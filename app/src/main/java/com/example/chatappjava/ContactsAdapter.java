@@ -39,7 +39,6 @@ public class ContactsAdapter extends RecyclerView.Adapter<ContactsAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(ViewHolder holder, @SuppressLint("RecyclerView") int position) {
-        Log.d(TAG, "onBindViewHolder: called.");
 
         Glide.with(context)
                 .asBitmap()

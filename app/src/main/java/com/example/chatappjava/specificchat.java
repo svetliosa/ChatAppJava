@@ -38,7 +38,6 @@ public class specificchat extends AppCompatActivity {
 
     private String enteredmessage;
     String mrecievername, recievername, recieverimage, recieverid, senderid;
-    Boolean changes = false;
 
     ImageButton mbackbuttonofspecificchat;
 
@@ -114,7 +113,6 @@ public class specificchat extends AppCompatActivity {
         });
 
 
-
         msendmessagebutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -145,7 +143,9 @@ public class specificchat extends AppCompatActivity {
                         messagesAdapter.notifyDataSetChanged();
                         if (result != 0) {
                             mgetmessage.setText(null);
-                            changes = true;
+                            messagesAdapter.notifyDataSetChanged();
+                            finish();
+                            startActivity(getIntent());
                         }
                     } catch (SQLException e) {
                         e.printStackTrace();
@@ -155,6 +155,7 @@ public class specificchat extends AppCompatActivity {
                 }
             }
         });
+
     }
 
 
@@ -163,6 +164,7 @@ public class specificchat extends AppCompatActivity {
         super.onStart();
         messagesAdapter.notifyDataSetChanged();
     }
+
 
     @Override
     public void onStop() {

@@ -35,4 +35,10 @@
     <string name="sendFriendRequest">Friend request is sended</string>
     <string name="userAccepted">User has been accepted</string>
     <string name="userDeclined">User has been declined</string>
+    <string name="activateAcc">Please enter the code from your email to activate the account</string>
+    <string name="code">Code</string>
+    <string name="confirmCode">Confirm code</string>
+    <string name="noContacts">You have no contacts</string>
+    <string name="noFriendRequests">There is no more friend requests</string>
+    <string name="noContactsForRemove">There is no more contacts for remove</string>
 </resources>

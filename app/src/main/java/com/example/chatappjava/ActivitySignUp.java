@@ -3,6 +3,7 @@ package com.example.chatappjava;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -38,7 +39,8 @@ public class ActivitySignUp extends AppCompatActivity {
     private Button btnSignUp;
     private Button btnSignIn;
     private TextView txvAddImage;
-    private String imageUri = "android.resource://com.example.chatappjava/2131165281";
+    private String imageUri = "content://com.android.providers.downloads.documents/document/raw%3A%2Fstorage%2Femulated%2F0%2FDownload%2Fdefaultimage.jpg";
+    private Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
